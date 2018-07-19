@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app"></div>
+</body>
+<script src="./static/react.development.js"></script>
+<script src="./static/react-dom.development.js"></script>
+<script src="./static/babel.min.js"></script>
+<script type="text/jsx">
+    class Clock extends React.Component{
+        constructor(props){
+            super(props);
+            this.state = {
+                nowTime: new Date()
+            }
+        }
+
+        render(){
+            return(
+                <div>
+                    <h1>现在的时间是:</h1>
+                    {this.state.nowTime.toLocaleTimeString()}
+                </div>
+            )
+        }
+
+        componentDidMount(){
+            this.timer = setInterval(() => {
+                console.log("定时器正在running");
+                this.setState({
+                    nowTime: new Date()
+                })
+            },1000)
+        }
+
+        componentWillUnmount(){
+            clearInterval(this.timer);
+        }
+    }
+
+    class Layout extends React.Component{
+        constructor(props){
+            super(props);
+            this.state = {
+                isShowClock: true
+            }
+        }
+
+        handleMoveOut= () => {
+            ReactDOM.unmountComponentAtNode(document.querySelector("#app"));
+        }
+
+        render(){
+            let child = this.state.isShowClock?<Clock></Clock>:null;
+            return(
+                <div>
+                    {child}
+                    <button onClick={this.handleMoveOut}>移除</button>
+                </div>
+            )
+        }
+    }
+
+    ReactDOM.render(<Layout/>, document.querySelector("#app"));
+
+</script>
+</html>

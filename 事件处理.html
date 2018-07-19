@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .btn{
+            display: block;
+            padding: 15px 30px;
+            background: mediumspringgreen;
+            color: saddlebrown;
+            outline: none;
+            font-size: 16px;
+            border-radius: 3px;
+        }
+        .btn:active{
+            background: yellowgreen;
+        }
+    </style>
+</head>
+<body>
+<div id="app"></div>
+</body>
+<script src="./static/react.development.js"></script>
+<script src="./static/react-dom.development.js"></script>
+<script src="./static/babel.min.js"></script>
+<script type="text/jsx">
+    class Button extends React.Component {
+        constructor(props){
+            super(props);
+            this.state = {
+                msg: "hello world!"
+            }
+        }
+
+        handleClick = () => {
+            this.setState({
+                msg: "hello react!"
+            })
+        }
+        render() {
+            return (
+                <div>
+                    <h1>{this.state.msg}</h1>
+                    <button className="btn" onClick={this.handleClick}>{this.props.children}</button>
+                </div>
+            )
+        }
+    }
+
+    class Layout extends React.Component{
+        render(){
+            return(
+                <div>
+                    <Button>Transform</Button>
+                </div>
+            )
+        }
+    }
+
+    ReactDOM.render(<Layout/>, document.querySelector("#app"));
+</script>
+</html>
